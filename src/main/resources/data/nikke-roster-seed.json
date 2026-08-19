@@ -1,0 +1,80 @@
+[
+  {
+    "unitCode": "NIKKE_RAPI",
+    "name": "Rapi",
+    "rarity": "SR",
+    "manufacturer": "ELYSION",
+    "classType": "ATTACKER",
+    "element": "FIRE",
+    "weaponType": "AR",
+    "baseStats": {
+      "hp": 583420,
+      "atk": 25410,
+      "def": 3920
+    },
+    "normalAttack": {
+      "name": "Rifle Attack",
+      "type": "Active",
+      "cooldownSeconds": 0,
+      "description": "Deals 13.65% ATK as damage to target."
+    },
+    "skill1": {
+      "name": "Fierce Shot",
+      "type": "Passive",
+      "cooldownSeconds": 0,
+      "description": "Activates when attacking with Full Burst. Increases self ATK by 21.81% for 10 sec."
+    },
+    "skill2": {
+      "name": "Missile",
+      "type": "Active",
+      "cooldownSeconds": 20,
+      "description": "Deals 528.24% ATK damage to the target with the highest ATK."
+    },
+    "burstSkill": {
+      "name": "Let's End This",
+      "burstType": "BURST_III",
+      "cooldownSeconds": 40,
+      "description": "Deals 657.72% ATK damage to the target with highest ATK and increases self ATK by 21.81% for 10 sec."
+    },
+    "imageUrl": "https://assets.nikke-db.com/units/rapi.png"
+  },
+  {
+    "unitCode": "NIKKE_ANIS",
+    "name": "Anis",
+    "rarity": "SR",
+    "manufacturer": "TETRA",
+    "classType": "DEFENDER",
+    "element": "IRON",
+    "weaponType": "RL",
+    "baseStats": {
+      "hp": 643890,
+      "atk": 20120,
+      "def": 4560
+    },
+    "normalAttack": {
+      "name": "Rocket Launcher",
+      "type": "Active",
+      "cooldownSeconds": 0,
+      "description": "Deals 61.3% ATK as damage to target area."
+    },
+    "skill1": {
+      "name": "Cram",
+      "type": "Passive",
+      "cooldownSeconds": 0,
+      "description": "Increases DEF of all allies by 15.2% when attacked."
+    },
+    "skill2": {
+      "name": "Spurt",
+      "type": "Active",
+      "cooldownSeconds": 20,
+      "description": "Shares damage with the two allies with the highest ATK for 10 sec."
+    },
+    "burstSkill": {
+      "name": "Pinpoint Missile",
+      "burstType": "BURST_II",
+      "cooldownSeconds": 20,
+      "description": "Deals 392.4% ATK damage to all enemies within attack range and reduces DEF by 12.3% for 5 sec."
+    },
+    "imageUrl": "https://assets.nikke-db.com/units/anis.png"
+  }
+]
