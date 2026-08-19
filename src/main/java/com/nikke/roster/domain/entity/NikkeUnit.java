@@ -1,5 +1,6 @@
 package com.nikke.roster.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nikke.roster.domain.enums.*;
 import com.nikke.roster.domain.model.BaseStats;
 import com.nikke.roster.domain.model.BurstSkill;
@@ -29,35 +30,44 @@ public class NikkeUnit {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @JsonProperty("unitCode")
     @Column(nullable = false, unique = true, length = 64)
     private String unitCode;
 
+    @JsonProperty("name")
     @Column(nullable = false, length = 128)
     private String name;
 
+    @JsonProperty("rarity")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 16)
     private Rarity rarity;
 
+    @JsonProperty("manufacturer")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 32)
     private Manufacturer manufacturer;
 
+    @JsonProperty("classType")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 32)
     private ClassType classType;
 
+    @JsonProperty("element")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 32)
     private Element element;
 
+    @JsonProperty("weaponType")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 16)
     private WeaponType weaponType;
 
+    @JsonProperty("baseStats")
     @Embedded
     private BaseStats baseStats;
 
+    @JsonProperty("normalAttack")
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "name", column = @Column(name = "norm_attack_name")),
@@ -65,8 +75,9 @@ public class NikkeUnit {
             @AttributeOverride(name = "cooldownSeconds", column = @Column(name = "norm_attack_cd")),
             @AttributeOverride(name = "description", column = @Column(name = "norm_attack_desc", columnDefinition = "TEXT"))
     })
-    private Skill normalAttacks;
+    private Skill normalAttack;
 
+    @JsonProperty("skill1")
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "name", column = @Column(name = "skill1_name")),
@@ -76,6 +87,7 @@ public class NikkeUnit {
     })
     private Skill skill1;
 
+    @JsonProperty("skill2")
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "name", column = @Column(name = "skill2_name")),
@@ -85,9 +97,11 @@ public class NikkeUnit {
     })
     private Skill skill2;
 
+    @JsonProperty("burstSkill")
     @Embedded
     private BurstSkill burstSkill;
 
+    @JsonProperty("imageUrl")
     @Column(name = "image_url", length = 512)
     private String imageUrl;
 

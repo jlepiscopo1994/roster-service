@@ -56,7 +56,8 @@ public class RosterSyncService {
             try (InputStream inputStream = resource.getInputStream()) {
                 List<NikkeUnit> incomingUnits = mapper.readValue(
                         inputStream,
-                        new TypeReference<List<NikkeUnit>>() {}
+                        new TypeReference<>() {
+                        }
                 );
 
                 return processBatchUpsert(incomingUnits);
@@ -117,7 +118,7 @@ public class RosterSyncService {
         target.setElement(source.getElement());
         target.setWeaponType(source.getWeaponType());
         target.setBaseStats(source.getBaseStats());
-        target.setNormalAttacks(source.getNormalAttacks());
+        target.setNormalAttack(source.getNormalAttack());
         target.setSkill1(source.getSkill1());
         target.setSkill2(source.getSkill2());
         target.setBurstSkill(source.getBurstSkill());
