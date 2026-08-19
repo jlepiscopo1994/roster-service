@@ -1,0 +1,70 @@
+{
+  "realm": "nikke-ark",
+  "enabled": true,
+  "registrationAllowed": false,
+  "resetPasswordAllowed": true,
+  "rememberMe": true,
+  "roles": {
+    "realm": [
+      {
+        "name": "ROLE_CENTRAL_GOVERNMENT",
+        "description": "Administrator role with catalog sync and management permissions"
+      },
+      {
+        "name": "ROLE_COMMANDER",
+        "description": "Standard user role with catalog querying and squad dispatch permissions"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "outpost-backend-client",
+      "name": "Outpost Backend Service Client",
+      "enabled": true,
+      "publicClient": true,
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": true,
+      "serviceAccountsEnabled": false,
+      "redirectUris": ["*"],
+      "webOrigins": ["*"],
+      "protocol": "openid-connect"
+    }
+  ],
+  "users": [
+    {
+      "username": "adm_syuen",
+      "enabled": true,
+      "email": "syuen@missilis.ark",
+      "firstName": "Syuen",
+      "lastName": "CEO",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "central123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "ROLE_CENTRAL_GOVERNMENT",
+        "ROLE_COMMANDER"
+      ]
+    },
+    {
+      "username": "commander_01",
+      "enabled": true,
+      "email": "commander01@outpost.ark",
+      "firstName": "Outpost",
+      "lastName": "Commander",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "nikke123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "ROLE_COMMANDER"
+      ]
+    }
+  ]
+}
