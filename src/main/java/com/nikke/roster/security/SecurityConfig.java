@@ -2,6 +2,7 @@ package com.nikke.roster.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,6 +24,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Allow unauthenticated access to health and documentation endpoints
                         .requestMatchers("/actuator/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        // Admin routes require admin authority at the filter chain level as well
+                        .requestMatchers("/api/v1/admin/**").hasRole("CENTRAL_GOVERNMENT")
+                        // Read catalog routes requires either role
+                        .requestMatchers(HttpMethod.GET, "/api/v1/roster/**").hasAnyRole("COMMANDER", "CENTRAL_GOVENRMENT")
+                        // All other endpoints require authentication
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2

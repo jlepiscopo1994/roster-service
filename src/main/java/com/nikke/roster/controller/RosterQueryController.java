@@ -8,6 +8,7 @@ import com.nikke.roster.repository.NikkeUnitRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/roster/units")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('COMMANDER', 'CENTRAL_GOVERNMENT')")
 public class RosterQueryController {
 
     private final NikkeUnitRepository unitRepository;
