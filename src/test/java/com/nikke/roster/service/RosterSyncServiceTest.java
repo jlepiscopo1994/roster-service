@@ -51,7 +51,7 @@ class RosterSyncServiceTest {
                 .element(Element.FIRE)
                 .weaponType(WeaponType.AR)
                 .baseStats(BaseStats.builder().hp(583420).atk(25410).def(3920).build())
-                .normalAttacks(Skill.builder().name("Rifle").type("Active").cooldownSeconds(0).description("DMG").build())
+                .normalAttack(Skill.builder().name("Rifle").type("Active").cooldownSeconds(0).description("DMG").build())
                 .skill1(Skill.builder().name("S1").type("Passive").cooldownSeconds(0).description("Buff").build())
                 .skill2(Skill.builder().name("S2").type("Active").cooldownSeconds(20).description("Nuke").build())
                 .burstSkill(BurstSkill.builder().burstName("Burst").burstType(BurstType.BURST_III).cooldownSeconds(40).description("Big Nuke").build())
