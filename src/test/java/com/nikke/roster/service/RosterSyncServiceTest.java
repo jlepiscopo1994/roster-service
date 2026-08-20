@@ -1,13 +1,13 @@
 package com.nikke.roster.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nikke.roster.domain.entity.NikkeUnit;
+import com.nikke.roster.domain.entity.Unit;
 import com.nikke.roster.domain.enums.*;
 import com.nikke.roster.domain.model.BaseStats;
 import com.nikke.roster.domain.model.BurstSkill;
 import com.nikke.roster.domain.model.Skill;
 import com.nikke.roster.dto.RosterSyncResult;
-import com.nikke.roster.repository.NikkeUnitRepository;
+import com.nikke.roster.repository.UnitRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -29,7 +28,7 @@ import static org.mockito.Mockito.*;
 class RosterSyncServiceTest {
 
     @Mock
-    private NikkeUnitRepository unitRepository;
+    private UnitRepository unitRepository;
 
     @Spy
     private ObjectMapper objectMapper = new ObjectMapper();
@@ -37,12 +36,12 @@ class RosterSyncServiceTest {
     @InjectMocks
     private RosterSyncService rosterSyncService;
 
-    private NikkeUnit sampleUnit;
+    private Unit sampleUnit;
 
     @BeforeEach
     void setUp() {
-        sampleUnit = NikkeUnit.builder()
-                .id(UUID.randomUUID())
+        sampleUnit = Unit.builder()
+                .id(1L)
                 .unitCode("NIKKE_RAPI")
                 .name("Rapi")
                 .rarity(Rarity.SR)
@@ -54,7 +53,7 @@ class RosterSyncServiceTest {
                 .normalAttack(Skill.builder().name("Rifle").type("Active").cooldownSeconds(0).description("DMG").build())
                 .skill1(Skill.builder().name("S1").type("Passive").cooldownSeconds(0).description("Buff").build())
                 .skill2(Skill.builder().name("S2").type("Active").cooldownSeconds(20).description("Nuke").build())
-                .burstSkill(BurstSkill.builder().burstName("Burst").burstType(BurstType.BURST_III).cooldownSeconds(40).description("Big Nuke").build())
+                .burstSkill(BurstSkill.builder().burstName("Burst").burstStage(BurstStage.BURST_III).cooldownSeconds(40).description("Big Nuke").build())
                 .imageUrl("https://example.com/rapi.png")
                 .build();
     }
@@ -63,7 +62,7 @@ class RosterSyncServiceTest {
     @DisplayName("Should insert units when they do not exist in the database")
     void shouldInsertUnitsWhenNotExists() {
         when(unitRepository.findByUnitCode("NIKKE_RAPI")).thenReturn(Optional.empty());
-        when(unitRepository.save(any(NikkeUnit.class))).thenReturn(sampleUnit);
+        when(unitRepository.save(any(Unit.class))).thenReturn(sampleUnit);
 
         RosterSyncResult result = rosterSyncService.processBatchUpsert(List.of(sampleUnit));
 
@@ -78,8 +77,8 @@ class RosterSyncServiceTest {
     @Test
     @DisplayName("Should update units when they already exist in the database (Idempotent)")
     void shouldUpdateUnitsWhenExists() {
-        NikkeUnit existingUnit = NikkeUnit.builder()
-                .id(UUID.randomUUID())
+        Unit existingUnit = Unit.builder()
+                .id(1L)
                 .unitCode("NIKKE_RAPI")
                 .name("Old Rapi")
                 .rarity(Rarity.SR)
@@ -90,7 +89,7 @@ class RosterSyncServiceTest {
                 .build();
 
         when(unitRepository.findByUnitCode("NIKKE_RAPI")).thenReturn(Optional.of(existingUnit));
-        when(unitRepository.save(any(NikkeUnit.class))).thenReturn(existingUnit);
+        when(unitRepository.save(any(Unit.class))).thenReturn(existingUnit);
 
         RosterSyncResult result = rosterSyncService.processBatchUpsert(List.of(sampleUnit));
 
@@ -107,7 +106,7 @@ class RosterSyncServiceTest {
     @DisplayName("Should load and parse nikke-roster-seed.json from classpath")
     void shouldSyncFromClasspath() {
         when(unitRepository.findByUnitCode(anyString())).thenReturn(Optional.empty());
-        when(unitRepository.save(any(NikkeUnit.class))).thenAnswer(i -> i.getArgument(0));
+        when(unitRepository.save(any(Unit.class))).thenAnswer(i -> i.getArgument(0));
 
         RosterSyncResult result = rosterSyncService.syncFromClasspath();
 
