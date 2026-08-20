@@ -27,7 +27,7 @@ public class SecurityConfig {
                         // Admin routes require admin authority at the filter chain level as well
                         .requestMatchers("/api/v1/admin/**").hasRole("CENTRAL_GOVERNMENT")
                         // Read catalog routes requires either role
-                        .requestMatchers(HttpMethod.GET, "/api/v1/roster/**").hasAnyRole("COMMANDER", "CENTRAL_GOVENRMENT")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/roster/**").hasAnyRole("COMMANDER", "CENTRAL_GOVERNMENT")
                         // All other endpoints require authentication
                         .anyRequest().authenticated()
                 )

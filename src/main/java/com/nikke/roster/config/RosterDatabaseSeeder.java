@@ -1,8 +1,10 @@
 package com.nikke.roster.config;
 
+import com.nikke.roster.dto.RosterSyncResult;
 import com.nikke.roster.repository.NikkeUnitRepository;
 import com.nikke.roster.service.RosterSyncService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -19,15 +21,19 @@ public class RosterDatabaseSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        long currentUnitCount = unitRepository.count();
-
-        if (currentUnitCount == 0) {
+        if (unitRepository.count() == 0) {
             log.info("Roster database catalog is empty. Initiating baseline startup seeding...");
-            var results = rosterSyncService.syncFromClasspath();
-            log.info("Startup seeding completed: {} (Inserted: {}, Updated: {})",
-                    results.getStatus(), results.getInsertedCount(), results.getUpdatedCount());
-        } else {
-            log.info("Roster database already contains {} units. Skipping automatic seeding.", currentUnitCount);
+            try {
+                RosterSyncResult results = rosterSyncService.syncFromClasspath();
+                if (results != null && "SUCCESS".equalsIgnoreCase(results.getStatus())) {
+                    log.info("Startup seeding completed: SUCCESS (Inserted: {}, Updated: {})",
+                            results.getInsertedCount(), results.getUpdatedCount());
+                } else if (results != null) {
+                    log.warn("Startup seeding completed with status: {}", results.getStatus());
+                }
+            } catch (Exception e) {
+                log.warn("Startup seeding skipped or encountered exception: {}", e.getMessage());
+            }
         }
     }
 
