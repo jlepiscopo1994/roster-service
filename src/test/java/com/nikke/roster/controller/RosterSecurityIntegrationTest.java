@@ -1,12 +1,12 @@
 package com.nikke.roster.controller;
 
-import com.nikke.roster.domain.entity.NikkeUnit;
+import com.nikke.roster.domain.entity.Unit;
 import com.nikke.roster.domain.enums.Element;
 import com.nikke.roster.domain.enums.Manufacturer;
 import com.nikke.roster.domain.enums.Rarity;
 import com.nikke.roster.domain.enums.WeaponType;
 import com.nikke.roster.dto.RosterSyncResult;
-import com.nikke.roster.repository.NikkeUnitRepository;
+import com.nikke.roster.repository.UnitRepository;
 import com.nikke.roster.service.RosterSyncService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -42,7 +42,7 @@ public class RosterSecurityIntegrationTest {
     private RosterSyncService rosterSyncService;
 
     @MockBean
-    private NikkeUnitRepository unitRepository;
+    private UnitRepository unitRepository;
 
     @BeforeEach
     void setUp() {
@@ -110,7 +110,7 @@ public class RosterSecurityIntegrationTest {
         @Test
         @DisplayName("Should return 200 OK when accessing units catalog as ROLE_COMMANDER")
         void getUnits_commanderRole_returns200() throws Exception {
-            NikkeUnit sampleUnit = NikkeUnit.builder()
+            Unit sampleUnit = Unit.builder()
                     .unitCode("NIKKE_RAPI")
                     .name("Rapi")
                     .rarity(Rarity.SR)
@@ -130,7 +130,7 @@ public class RosterSecurityIntegrationTest {
         @Test
         @DisplayName("Should return 200 OK when accessing unit by code as ROLE_CENTRAL_GOVERNMENT")
         void getUnitCode_centralGovernmentRole_returns200() throws Exception {
-            NikkeUnit sampleUnit = NikkeUnit.builder()
+            Unit sampleUnit = Unit.builder()
                     .unitCode("NIKKE_RAPI")
                     .name("Rapi")
                     .rarity(Rarity.SR)

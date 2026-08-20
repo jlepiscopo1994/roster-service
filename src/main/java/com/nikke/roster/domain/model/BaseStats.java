@@ -12,12 +12,12 @@ import lombok.*;
 @Builder
 public class BaseStats {
 
-    @Column(name = "base_hp", nullable = false)
+    @Column(name = "base_hp", nullable = true)
     private Integer hp;
 
-    @Column(name = "base_atk", nullable = false)
+    @Column(name = "base_atk", nullable = true)
     private Integer atk;
 
-    @Column(name = "base_def", nullable = false)
+    @Column(name = "base_def", nullable = true)
     private Integer def;
 }

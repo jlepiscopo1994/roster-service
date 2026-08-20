@@ -1,9 +1,9 @@
 package com.nikke.roster.controller;
 
-import com.nikke.roster.domain.entity.NikkeUnit;
+import com.nikke.roster.domain.entity.Unit;
 import com.nikke.roster.domain.enums.*;
 import com.nikke.roster.dto.RosterSyncResult;
-import com.nikke.roster.repository.NikkeUnitRepository;
+import com.nikke.roster.repository.UnitRepository;
 import com.nikke.roster.service.RosterSyncService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -39,7 +39,7 @@ public class RosterControllersTest {
     private RosterSyncService rosterSyncService;
 
     @MockBean
-    private NikkeUnitRepository unitRepository;
+    private UnitRepository unitRepository;
 
     @BeforeEach
     void setUp() {
@@ -77,7 +77,7 @@ public class RosterControllersTest {
     @Test
     @DisplayName("GET /api/v1/roster/units should return list of units")
     void shouldReturnAllUnits() throws Exception {
-        NikkeUnit rapi = NikkeUnit.builder()
+        Unit rapi = Unit.builder()
                 .unitCode("NIKKE_RAPI")
                 .name("Rapi")
                 .rarity(Rarity.SR)

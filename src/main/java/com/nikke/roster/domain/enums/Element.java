@@ -4,6 +4,6 @@ public enum Element {
     FIRE,
     WATER,
     WIND,
-    ELECTRIC,
-    IRON
+    IRON,
+    ELECTRIC
 }

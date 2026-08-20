@@ -1,10 +1,9 @@
 package com.nikke.roster.config;
 
 import com.nikke.roster.dto.RosterSyncResult;
-import com.nikke.roster.repository.NikkeUnitRepository;
+import com.nikke.roster.repository.UnitRepository;
 import com.nikke.roster.service.RosterSyncService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -16,7 +15,7 @@ public class RosterDatabaseSeeder implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(RosterDatabaseSeeder.class);
 
-    private final NikkeUnitRepository unitRepository;
+    private final UnitRepository unitRepository;
     private final RosterSyncService rosterSyncService;
 
     @Override

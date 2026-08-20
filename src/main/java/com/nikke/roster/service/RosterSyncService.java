@@ -3,9 +3,9 @@ package com.nikke.roster.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nikke.roster.domain.entity.NikkeUnit;
+import com.nikke.roster.domain.entity.Unit;
 import com.nikke.roster.dto.RosterSyncResult;
-import com.nikke.roster.repository.NikkeUnitRepository;
+import com.nikke.roster.repository.UnitRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class RosterSyncService {
     private static final Logger log = LoggerFactory.getLogger(RosterSyncService.class);
     private static final String DEFAULT_SEED_FILE = "data/nikke-roster-seed.json";
 
-    private final NikkeUnitRepository unitRepository;
+    private final UnitRepository unitRepository;
     private final ObjectMapper objectMapper;
 
     /**
@@ -54,7 +54,7 @@ public class RosterSyncService {
                     .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
             try (InputStream inputStream = resource.getInputStream()) {
-                List<NikkeUnit> incomingUnits = mapper.readValue(
+                List<Unit> incomingUnits = mapper.readValue(
                         inputStream,
                         new TypeReference<>() {
                         }
@@ -78,15 +78,15 @@ public class RosterSyncService {
      * Idempotent batch upsert logic: inserts new records or updates existing ones based on unitCode.
      */
     @Transactional
-    public RosterSyncResult processBatchUpsert(List<NikkeUnit> incomingUnits) {
+    public RosterSyncResult processBatchUpsert(List<Unit> incomingUnits) {
         int inserted = 0;
         int updated = 0;
 
-        for (NikkeUnit incoming : incomingUnits) {
-            Optional<NikkeUnit> existingOpt = unitRepository.findByUnitCode(incoming.getUnitCode());
+        for (Unit incoming : incomingUnits) {
+            Optional<Unit> existingOpt = unitRepository.findByUnitCode(incoming.getUnitCode());
 
             if (existingOpt.isPresent()) {
-                NikkeUnit existing = existingOpt.get();
+                Unit existing = existingOpt.get();
                 updateExistingUnit(existing, incoming);
                 unitRepository.save(existing);
                 updated++;
@@ -110,7 +110,7 @@ public class RosterSyncService {
                 .build();
     }
 
-    private void updateExistingUnit(NikkeUnit target, NikkeUnit source) {
+    private void updateExistingUnit(Unit target, Unit source) {
         target.setName(source.getName());
         target.setRarity(source.getRarity());
         target.setManufacturer(source.getManufacturer());

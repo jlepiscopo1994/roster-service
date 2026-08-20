@@ -1,7 +1,7 @@
 package com.nikke.roster.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.nikke.roster.domain.enums.BurstType;
+import com.nikke.roster.domain.enums.BurstStage;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
@@ -23,7 +23,7 @@ public class BurstSkill {
     @JsonProperty("burstType")
     @Enumerated(EnumType.STRING)
     @Column(name = "burst_stage", nullable = false)
-    private BurstType burstType;
+    private BurstStage burstStage;
 
     @JsonProperty("cooldownSeconds")
     @Column(name = "burst_cooldown_seconds", nullable = false)

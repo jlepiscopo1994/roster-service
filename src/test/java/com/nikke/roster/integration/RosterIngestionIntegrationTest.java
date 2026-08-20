@@ -1,8 +1,8 @@
 package com.nikke.roster.integration;
 
-import com.nikke.roster.domain.entity.NikkeUnit;
+import com.nikke.roster.domain.entity.Unit;
 import com.nikke.roster.dto.RosterSyncResult;
-import com.nikke.roster.repository.NikkeUnitRepository;
+import com.nikke.roster.repository.UnitRepository;
 import com.nikke.roster.service.RosterSyncService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +33,7 @@ class RosterIngestionIntegrationTest {
     private RosterSyncService rosterSyncService;
 
     @Autowired
-    private NikkeUnitRepository unitRepository;
+    private UnitRepository unitRepository;
 
     @BeforeEach
     void setup() {
@@ -48,7 +48,7 @@ class RosterIngestionIntegrationTest {
         assertThat(result.getStatus()).isEqualTo("SUCCESS");
         assertThat(result.getInsertedCount()).isGreaterThan(0);
 
-        List<NikkeUnit> units = unitRepository.findAll();
+        List<Unit> units = unitRepository.findAll();
         assertThat(units).isNotEmpty();
     }
 

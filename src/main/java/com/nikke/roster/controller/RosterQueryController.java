@@ -1,12 +1,11 @@
 package com.nikke.roster.controller;
 
-import com.nikke.roster.domain.entity.NikkeUnit;
+import com.nikke.roster.domain.entity.Unit;
 import com.nikke.roster.domain.enums.Element;
 import com.nikke.roster.domain.enums.Manufacturer;
 import com.nikke.roster.domain.enums.Rarity;
-import com.nikke.roster.repository.NikkeUnitRepository;
+import com.nikke.roster.repository.UnitRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +18,10 @@ import java.util.List;
 @PreAuthorize("hasAnyRole('COMMANDER', 'CENTRAL_GOVERNMENT')")
 public class RosterQueryController {
 
-    private final NikkeUnitRepository unitRepository;
+    private final UnitRepository unitRepository;
 
     @GetMapping
-    public ResponseEntity<List<NikkeUnit>> getAll(
+    public ResponseEntity<List<Unit>> getAll(
             @RequestParam(required = false) Manufacturer manufacturer,
             @RequestParam(required = false) Element element,
             @RequestParam(required = false) Rarity rarity
@@ -40,7 +39,7 @@ public class RosterQueryController {
     }
 
     @GetMapping("/{unitCode}")
-    public ResponseEntity<NikkeUnit> getUnitByCode(@PathVariable String unitCode) {
+    public ResponseEntity<Unit> getUnitByCode(@PathVariable String unitCode) {
         return unitRepository.findByUnitCode(unitCode)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
